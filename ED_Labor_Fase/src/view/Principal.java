@@ -42,8 +42,8 @@ public class Principal {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo));
 			bw.write(quantidadeClassificados + "");
 			bw.close();
-		} catch (Exception e) {
-
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
