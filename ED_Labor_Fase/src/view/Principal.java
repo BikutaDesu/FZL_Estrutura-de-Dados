@@ -1,65 +1,63 @@
 package view;
 
-import java.util.Random;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Principal {
 	public static void main(String[] args) {
-		int[] competidores = null;
-		competidores = definirQuantidadeCompetidores(competidores);
-		int quantidadeClassificados = definirQuantidadeAprovados(competidores.length);
-		competidores = cadastrarCompetidores(competidores);
-		int[] classificacaoCompetidores = ordenarVetor(competidores);
+		BufferedReader br = lerArquivo("competidores.txt");
+		int qtdCompetidores;
+		int qtdClassificados;
+		try {
+			qtdCompetidores = Integer.parseInt(br.readLine());
+			qtdClassificados = Integer.parseInt(br.readLine());
+			int[] competidores = new int[qtdCompetidores];
 
-//		for (int i = 0; i < classificacaoCompetidores.length; i++) {
-//			System.out.println(classificacaoCompetidores[i]);
-//		}
-		pegarQuantidadeAprovados(classificacaoCompetidores, quantidadeClassificados);
+			competidores = cadastrarCompetidores(competidores, br);
+
+			int[] competidoresOrdenados = ordenarVetor(competidores);
+
+			pegarQuantidadeAprovados(competidoresOrdenados, qtdClassificados);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
-	public static int definirQuantidadeAprovados(int quantidadeCompetidores) {
-		int quantidade = 0;
-		Scanner sc = new Scanner(System.in);
-		do {
-//			System.out.print("Quantidade de notas para classificação: ");
-			quantidade = sc.nextInt();
-			if (quantidade < 1 || quantidade > quantidadeCompetidores) {
-				System.out.println("Número inválido!! por favor digite um numero entre 1 e 1000");
+	public static BufferedReader lerArquivo(String nomeArquivo) {
+		BufferedReader br = null;
+		try {
+			br = new BufferedReader(new FileReader(nomeArquivo));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return br;
+	}
+
+	public static void gravarArquivo(String nomeArquivo, int quantidadeClassificados) {
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(nomeArquivo));
+			bw.write(quantidadeClassificados + "");
+			bw.close();
+		} catch (Exception e) {
+
+		}
+	}
+
+	public static int[] cadastrarCompetidores(int[] competidores, BufferedReader br) {
+		try {
+			int indiceLaco = 0;
+			String linha = br.readLine();
+			while (linha != null) {
+				competidores[indiceLaco] = Integer.parseInt(linha);
+				linha = br.readLine();
+				indiceLaco++;
 			}
-		} while (quantidade < 1 || quantidade > quantidadeCompetidores);
-		return quantidade;
-	}
-
-	public static int[] definirQuantidadeCompetidores(int[] competidores) {
-		Scanner sc = new Scanner(System.in);
-		int quantidadeCompetidores = 0;
-		do {
-//			System.out.print("Digite a quantidade de competidores: ");
-			quantidadeCompetidores = sc.nextInt();
-			if (quantidadeCompetidores < 1 || quantidadeCompetidores > 1000) {
-				System.out.println("Número inválido!! por favor digite um numero entre 1 e 1000");
-			}
-		} while (quantidadeCompetidores < 1 || quantidadeCompetidores > 1000);
-		competidores = new int[quantidadeCompetidores];
-		return competidores;
-	}
-
-	public static int[] cadastrarCompetidores(int[] competidores) {
-
-//		System.out.println("\nAgora digite as notas de cada competidor\n");
-		for (int i = 0; i < competidores.length; i++) {
-			int pontuacao = 0;
-			do {
-//				System.out.printf("Competidor %d - nota: ", i + 1);
-//				pontuacao = sc.nextInt();
-//				if (pontuacao < 1 || pontuacao > 1000) {
-//					System.out.println("Nota inválida!! por favor digite um numero entre 1 e 1000");
-//				}
-				pontuacao = new Random().nextInt(1001);
-//				System.out.printf("Competidor %d - nota: %d\n", i + 1, pontuacao);
-				System.out.printf("%d\n", pontuacao);
-			} while (pontuacao < 1 || pontuacao > 1000);
-			competidores[i] = pontuacao;
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		return competidores;
 	}
@@ -86,10 +84,16 @@ public class Principal {
 			do {
 				classificados++;
 				indiceCompetidor--;
-				notaCompetidor = competidores[indiceCompetidor];
+				if (indiceCompetidor < 0) {
+					break;
+				} else {
+					notaCompetidor = competidores[indiceCompetidor];
+				}
 			} while (notaAtual == notaCompetidor);
+			if (indiceCompetidor < 0 || classificados > quantidadeClassificados) {
+				break;
+			}
 		}
-//		System.out.printf("Quantidade de classificados: %d\n", classificados);
-		System.out.printf("%d\n", classificados);
+		gravarArquivo("competidoresClassificados.txt", classificados);
 	}
 }
