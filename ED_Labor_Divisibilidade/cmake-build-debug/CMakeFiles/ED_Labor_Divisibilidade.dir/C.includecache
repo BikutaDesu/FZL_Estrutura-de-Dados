@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+U:/OneDrive - Fatec Centro Paula Souza/Fatec/3 Semestre/IED - Estrutura de Dados/Estrutura-de-Dados/ED_Labor_Divisibilidade/main.c
+stdio.h
+-
+stdlib.h
+-
+conio.h
+-
+tesdiv.h
+U:/OneDrive - Fatec Centro Paula Souza/Fatec/3 Semestre/IED - Estrutura de Dados/Estrutura-de-Dados/ED_Labor_Divisibilidade/tesdiv.h
+
+U:/OneDrive - Fatec Centro Paula Souza/Fatec/3 Semestre/IED - Estrutura de Dados/Estrutura-de-Dados/ED_Labor_Divisibilidade/tesdiv.h
+math.h
+-
+

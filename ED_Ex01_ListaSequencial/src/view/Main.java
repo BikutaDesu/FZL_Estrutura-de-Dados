@@ -15,6 +15,7 @@ public class Main {
 		listaAluno.printObjects();
 		listaAluno.add(a3,1);
 		listaAluno.printObjects();
+//		listaAluno.add(a2);
 		
 		listaAluno.printObject(1);
 	}

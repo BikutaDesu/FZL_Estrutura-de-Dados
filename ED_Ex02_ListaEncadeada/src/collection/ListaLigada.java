@@ -3,34 +3,34 @@ package collection;
 import model.Livro;
 
 public class ListaLigada {
-	private Livro ultimo;
+	private Livro ultimoLivro;
 	private int tamanho;
 
 	public ListaLigada() {
 		this.tamanho = 0;
-		this.ultimo = (Livro) null;
+		this.ultimoLivro = (Livro) null;
 	}
 
 	public void adicionarNovo(int numero, String titulo, String autor, double preco) {
 		Livro livro;
 		if (listaEstaVazia()) {
 			livro = new Livro(numero, titulo, autor, preco, (Livro) null);
-			ultimo = livro;
+			ultimoLivro = livro;
 		} else {
-			livro = new Livro(numero, titulo, autor, preco, ultimo);
-			ultimo = livro;
+			livro = new Livro(numero, titulo, autor, preco, ultimoLivro);
+			ultimoLivro = livro;
 		}
 		tamanho++;
 	}
 
 	public void adicionarNovo(int posicao, int numero, String titulo, String autor, double preco) {
 		if (posicao <= this.tamanho && posicao > 0) {
-			Livro livroAtual = ultimo;
+			Livro livroAtual = ultimoLivro;
 			int posicaoAtual = 1;
 			while (livroAtual != null) {
 				if (posicao == 1) {
-					Livro novoLivro = new Livro(numero, titulo, autor, preco, this.ultimo);
-					this.ultimo = novoLivro;
+					Livro novoLivro = new Livro(numero, titulo, autor, preco, this.ultimoLivro);
+					this.ultimoLivro = novoLivro;
 					tamanho++;
 					break;
 				} else if (posicaoAtual == posicao - 1) {
@@ -46,7 +46,7 @@ public class ListaLigada {
 	}
 
 	public void adicionarNovoPrimeiro(int numero, String titulo, String autor, double preco) {
-		Livro livroAtual = ultimo;
+		Livro livroAtual = ultimoLivro;
 		while (livroAtual != null) {
 			if (livroAtual.getAnterior() == (Livro) null) {
 				Livro novoLivro = new Livro(numero, titulo, autor, preco, (Livro) null);
@@ -61,7 +61,7 @@ public class ListaLigada {
 	public Livro getLivro(int posicao) {
 		Livro livro = (Livro) null;
 		if (posicao <= this.tamanho) {
-			Livro livroAtual = ultimo;
+			Livro livroAtual = ultimoLivro;
 			int posicaoAtual = 1;
 			while (livroAtual != null) {
 				if (posicaoAtual == posicao) {
@@ -80,7 +80,7 @@ public class ListaLigada {
 
 	public void remover(int posicao) {
 		if (posicao <= this.tamanho) {
-			Livro livroAtual = ultimo;
+			Livro livroAtual = ultimoLivro;
 			int posicaoAtual = 1;
 			while (livroAtual != null) {
 				if (posicaoAtual == posicao - 1) {
@@ -97,14 +97,14 @@ public class ListaLigada {
 
 	public void remover() {
 		if (!listaEstaVazia()) {
-			Livro livro = ultimo.getAnterior();
-			ultimo.setAnterior(null);
-			ultimo = livro;
+			Livro livro = ultimoLivro.getAnterior();
+			ultimoLivro.setAnterior(null);
+			ultimoLivro = livro;
 		}
 	}
 
 	public void buscar(Livro livro) {
-		Livro livroAtual = ultimo;
+		Livro livroAtual = ultimoLivro;
 		int posicaoAtual = 1;
 		while (livroAtual != null) {
 			if (livro == livroAtual) {
@@ -126,7 +126,7 @@ public class ListaLigada {
 	}
 
 	public void exibirTodos() {
-		Livro livroAtual = ultimo;
+		Livro livroAtual = ultimoLivro;
 		while (livroAtual != null) {
 			System.out.println(livroAtual.toString());
 			livroAtual = livroAtual.getAnterior();
